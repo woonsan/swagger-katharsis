@@ -16,29 +16,29 @@
  */
 package com.github.woonsan.swagger.katharsis.core;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Set;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.katharsis.locator.SampleJsonServiceLocator;
-import io.katharsis.resource.ResourceFieldNameTransformer;
-import io.katharsis.resource.ResourceInformation;
-import io.katharsis.resource.ResourceInformationBuilder;
 import io.katharsis.resource.annotations.JsonApiResource;
+import io.katharsis.resource.field.ResourceField;
+import io.katharsis.resource.field.ResourceFieldNameTransformer;
+import io.katharsis.resource.information.ResourceInformation;
+import io.katharsis.resource.information.ResourceInformationBuilder;
 import io.katharsis.resource.registry.RegistryEntry;
 import io.katharsis.resource.registry.ResourceRegistry;
 import io.katharsis.resource.registry.ResourceRegistryBuilder;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.lang.reflect.Field;
-import java.util.Set;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.Before;
-import org.junit.Test;
-import org.reflections.Reflections;
-
 public class ResourceRegistryTest {
 
-    private static Log log = LogFactory.getLog(ResourceRegistryTest.class);
+    private static Logger log = LoggerFactory.getLogger(ResourceRegistryTest.class);
 
     private static final String RESOURCE_SEARCH_PACKAGE = "com.github.woonsan.swagger.katharsis.core.resource";
 
@@ -52,9 +52,9 @@ public class ResourceRegistryTest {
 
     @Before
     public void before() throws Exception {
-        ResourceRegistryBuilder registryBuilder = new ResourceRegistryBuilder(
-                                                                              new SampleJsonServiceLocator(),
-                                                                              new ResourceInformationBuilder());
+        ResourceRegistryBuilder registryBuilder =
+                new ResourceRegistryBuilder(new SampleJsonServiceLocator(),
+                                            new ResourceInformationBuilder(RESOURCE_FIELD_NAME_TRANSFORMER));
         resourceRegistry = registryBuilder.build(RESOURCE_SEARCH_PACKAGE, RESOURCE_DEFAULT_DOMAIN);
 
 
@@ -91,24 +91,24 @@ public class ResourceRegistryTest {
             out.println("      include: ");
             out.println("      filter: ");
 
-            Set<Field> attributeFields = resourceInfo.getAttributeFields();
+            Set<ResourceField> attributeFields = resourceInfo.getAttributeFields();
 
             if (attributeFields != null && !attributeFields.isEmpty()) {
                 out.println("attributes:");
 
-                for (Field attributeField : attributeFields) {
-                    String attributeName = RESOURCE_FIELD_NAME_TRANSFORMER.getName(attributeField);
+                for (ResourceField attributeField : attributeFields) {
+                    String attributeName = attributeField.getName();
                     out.println("  " + attributeName + ": " + attributeField.getType().getSimpleName());
                 }
             }
 
-            Set<Field> relationshipFields = resourceInfo.getRelationshipFields();
+            Set<ResourceField> relationshipFields = resourceInfo.getRelationshipFields();
 
             if (relationshipFields != null && !relationshipFields.isEmpty()) {
                 out.println("relationships:");
 
-                for (Field relationshipField : relationshipFields) {
-                    String relationshipName = RESOURCE_FIELD_NAME_TRANSFORMER.getName(relationshipField);
+                for (ResourceField relationshipField : relationshipFields) {
+                    String relationshipName = relationshipField.getName();
 
                     out.println("  " + relationshipName + ":");
                     out.println("    links:");

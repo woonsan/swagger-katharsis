@@ -33,6 +33,10 @@
   <name>${project.groupId}:${project.artifactId}</name>
   <description>The core module go generate Swagger definition for Katharsis JSONAPI applications</description>
 
+  <properties>
+    <log4j.version>1.2.17</log4j.version>
+  </properties>
+
   <dependencies>
 
     <dependency>
@@ -43,6 +47,27 @@
     <dependency>
       <groupId>io.katharsis</groupId>
       <artifactId>katharsis-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>

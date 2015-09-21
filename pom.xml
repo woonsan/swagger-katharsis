@@ -23,7 +23,7 @@
   <parent>
     <groupId>io.katharsis</groupId>
     <artifactId>katharsis-parent</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
   </parent>
 
   <groupId>com.github.woonsan</groupId>
@@ -65,7 +65,7 @@
   <properties>
 
     <swagger-core.version>1.5.0</swagger-core.version>
-    <katharsis-core.version>0.9.2</katharsis-core.version>
+    <katharsis-core.version>0.9.4</katharsis-core.version>
 
     <maven-source-plugin.version>2.4</maven-source-plugin.version>
     <maven-javadoc-plugin.version>2.10.2</maven-javadoc-plugin.version>
